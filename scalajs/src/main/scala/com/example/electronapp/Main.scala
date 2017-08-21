@@ -1,16 +1,18 @@
 package com.example.electronapp
 
 import scala.scalajs.js
-import js.Dynamic.{global => g}
 import io.atom.electron._
 import scala.scalajs.js.timers._
+import js.annotation._
 
-object Main extends js.JSApp {
+@JSExportTopLevel("Main")
+object Main {
 
-  def main(): Unit = {
+  @JSExport
+  def main(__dirname: String): Unit = {
 
-    val electron = g.require("electron");
-    val app = electron.app.asInstanceOf[App] // Module to control application life.
+    val electron = ElectronModule
+    val app = electron.app // Module to control application life.
 
     // Keep a global reference of the window object, if you don't, the window will
     // be closed automatically when the JavaScript object is GCed.
@@ -32,7 +34,7 @@ object Main extends js.JSApp {
       mainWindow = BrowserWindow(width = 800, height = 600)
 
       // and load the index.html of the app.
-      mainWindow.loadURL("file://" + g.__dirname + "/index.html")
+      mainWindow.loadURL("file://" + __dirname + "/index.html")
 
       // Open the devtools.
       mainWindow.openDevTools()

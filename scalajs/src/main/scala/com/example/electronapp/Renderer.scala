@@ -1,14 +1,21 @@
 package com.example.electronapp
 
 import scala.scalajs.js
-import org.scalajs.jquery.jQuery
-import js.Dynamic.{global => g}
-import js.annotation.JSExport
+import org.scalajs.jquery.JQueryStatic
+import js.annotation.{ JSExport, JSExportTopLevel, JSImport }
 
-@JSExport
+@js.native
+@JSImport("jquery", JSImport.Namespace)
+object jQuery extends JQueryStatic
+
+@js.native
+@JSImport("fs", JSImport.Namespace)
+object fs extends js.Object {
+  def readdirSync(path: String): js.Array[String] = js.native
+}
+
+@JSExportTopLevel("Renderer")
 object Renderer {
-
-  val fs = g.require("fs")
 
   @JSExport
   def main(): Unit = {
@@ -27,6 +34,6 @@ object Renderer {
   }
 
   def listFiles(path: String): Seq[String] = {
-    fs.readdirSync(path).asInstanceOf[js.Array[String]]
+    fs.readdirSync(path)
   }
 }

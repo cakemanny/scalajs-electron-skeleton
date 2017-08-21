@@ -150,7 +150,7 @@ trait BrowserWindow extends js.Object with EventEmitter {
 
 object BrowserWindow {
 
-  val browserWindow = g.require("electron").BrowserWindow.asInstanceOf[js.Dynamic]
+  val browserWindow = ElectronModule.BrowserWindow
 
   def apply(width: Int = 800, height: Int = 600, show: Boolean = true, icon: String = null): BrowserWindow = {
     js.Dynamic.newInstance(browserWindow)(

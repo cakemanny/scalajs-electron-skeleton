@@ -11,26 +11,24 @@ sbt
 sbt> ~electronMain
 ```
 
-Then you will need to get Electron [downloaded](https://github.com/atom/electron/releases)  on your machine.
-
-Once you do, call the Electron executable with the electron-app subfolder as a argument:
+Then in another shell, enter the electron-app subfolder, install javascript dependencies and launch electron
 ``` bash
-/your/path/to/Electron electron-app
-# e.g. on my MacOS machine
-~/development/tools/electron-v1.1.1-darwin-x64/Electron.app/Contents/MacOS/Electron electron-app/
+cd electron-app
+npm install
+npm start
 ```
 
 You should see a new window opening with the following text:
 > Hello World!
 >
->We are using node.js v6.1.0 and Electron 1.1.1.
+>We are using io.js v7.4.0 and Electron 1.6.12.
 >
 >Hello World from Scala.js
 
 ## Main process
-Sbt task `electronMain` aggregates the content of `fastOptJS` and of the launcher to form the `main.js` file that will be provided to Electron's main process. This is why the repo does not contain a `main.js` under the `electron-app` folder (unlike electron's quick start example): it is generated from the Scala.js code.
+Sbt task `electronMain` copies the content of `fastOptJS` to form the `scala-main.js` file that will be imported into to Electron's main process.
 
-Electron's [main process]((http://electron.atom.io/docs/tutorial/quick-start/)) is implemented by [com.example.electronapp.Main.scala](https://github.com/bchazalet/scalajs-electron-skeleton/blob/master/scalajs/src/main/scala/com/example/electronapp/Main.scala). It extends `js.App` and that's what the generated Scala.js launcher launches. You should not extend `js.App` elsewhere in your code or that will generate a conflict: instead use `JSExport`.
+Electron's [main process]((http://electron.atom.io/docs/tutorial/quick-start/)) is implemented by [com.example.electronapp.Main.scala](https://github.com/bchazalet/scalajs-electron-skeleton/blob/master/scalajs/src/main/scala/com/example/electronapp/Main.scala).
 
 If for some reason, you don't want the `main.js` to come from Scala.js, see the [simple-main-js](https://github.com/bchazalet/scalajs-electron-skeleton/tree/simple-main-js) branch where the main file is exactly the one from Electron's quick start example, written in pure javascript.
 

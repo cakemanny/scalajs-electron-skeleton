@@ -1,3 +1,4 @@
 .DS_Store
-/electron-app/main.js
+/electron-app/scala-main.js
 /scalajs/target
+/electron-app/node_modules
